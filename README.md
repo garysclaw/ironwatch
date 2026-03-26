@@ -22,6 +22,24 @@ Ironwatch is a native desktop app that shows live system metrics — CPU, memory
 
 ---
 
+## Install
+
+Download the latest release from the [Releases page](https://github.com/garysclaw/ironwatch/releases).
+
+**Debian/Ubuntu** — download `ironwatch_0.1.0_amd64.deb` and run:
+```bash
+sudo dpkg -i ironwatch_0.1.0_amd64.deb
+ironwatch
+```
+
+**AppImage** (any Linux) — download `ironwatch_0.1.0_amd64.AppImage` and run:
+```bash
+chmod +x ironwatch_0.1.0_amd64.AppImage
+./ironwatch_0.1.0_amd64.AppImage
+```
+
+---
+
 ## Tech stack
 
 | Layer | Tech |
@@ -38,7 +56,7 @@ The Rust backend runs a 1-second loop using `tokio`, collects metrics via `sysin
 
 ```
 Rust (sysinfo) → MetricsCollector → tauri::emit("metrics-update") → React (MetricsContext)
-                                  → tauri::emit("processes-update") → React (ProcessesContext)
+                                 → tauri::emit("processes-update") → React (ProcessesContext)
 ```
 
 Frontend state flows:
@@ -103,7 +121,7 @@ npm run tauri build
 
 ```
 ironwatch/
-├── src/                        # React frontend
+├── src/                         # React frontend
 │   ├── components/
 │   │   ├── CpuPanel/           # CPU usage + per-core bars + sparkline
 │   │   ├── MemoryPanel/        # RAM + swap bars + sparkline
@@ -140,7 +158,7 @@ ironwatch/
 ### Active branches
 
 | Branch | Purpose |
-|--------|---------|
+|--------|--------|
 | `feature/scaffold` | Full project scaffold + Phase 1 implementation |
 | `feature/tests` | Test suite (Rust + React) |
 
@@ -151,4 +169,3 @@ ironwatch/
 - [`SPEC.md`](./SPEC.md) — Full feature spec with acceptance criteria
 - [`ARCHITECTURE.md`](./ARCHITECTURE.md) — Architecture decisions and component design
 - [`TOOLS.md`](./TOOLS.md) — Build requirements and setup guide
-
