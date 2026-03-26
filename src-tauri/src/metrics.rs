@@ -7,7 +7,7 @@ use sysinfo::{
 pub struct CpuMetrics {
     pub overall_usage: f32,
     pub per_core_usage: Vec<f32>,
-    pub frequency_mhz: u64,
+    pub frequency_mhz: Option<u64>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -108,7 +108,7 @@ impl MetricsCollector {
         let cpus = self.system.cpus();
         let overall_usage = self.system.global_cpu_usage();
         let per_core_usage: Vec<f32> = cpus.iter().map(|c| c.cpu_usage()).collect();
-        let frequency_mhz = cpus.first().map(|c| c.frequency()).unwrap_or(0);
+        let frequency_mhz = cpus.first().map(|c| c.frequency()).filter(|&f| f > 0);
 
         let cpu = CpuMetrics {
             overall_usage,
@@ -167,3 +167,4 @@ impl MetricsCollector {
         processes
     }
 }
+
