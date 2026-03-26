@@ -164,3 +164,9 @@ impl MetricsCollector {
         processes
     }
 }
+
+impl Default for MetricsCollector {
+    fn default() -> Self {
+        Self::new()
+    }
+}
