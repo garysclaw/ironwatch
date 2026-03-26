@@ -1,5 +1,8 @@
 mod metrics;
 
+#[cfg(test)]
+mod tests;
+
 use metrics::MetricsCollector;
 use serde::{Deserialize, Serialize};
 use std::sync::Mutex;
