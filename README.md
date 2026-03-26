@@ -38,6 +38,10 @@ chmod +x ironwatch_0.1.0_amd64.AppImage
 ./ironwatch_0.1.0_amd64.AppImage
 ```
 
+**Windows** — download one of the following from the [Releases page](https://github.com/garysclaw/ironwatch/releases):
+- `ironwatch_0.1.0_x64-setup.exe` — NSIS installer (double-click to install)
+- `ironwatch_0.1.0_x64_en-US.msi` — MSI package
+
 ---
 
 ## Tech stack
