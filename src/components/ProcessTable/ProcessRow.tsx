@@ -6,10 +6,10 @@ interface Props {
 }
 
 function fmtMem(bytes: number): string {
-  if (bytes >= 1_073_741_824) return `${(bytes / 1_073_741_824).toFixed(1)}G`;
-  if (bytes >= 1_048_576) return `${(bytes / 1_048_576).toFixed(0)}M`;
-  if (bytes >= 1024) return `${(bytes / 1024).toFixed(0)}K`;
-  return `${bytes}B`;
+  if (bytes >= 1_073_741_824) return `${(bytes / 1_073_741_824).toFixed(1)} GiB`;
+  if (bytes >= 1_048_576) return `${(bytes / 1_048_576).toFixed(1)} MiB`;
+  if (bytes >= 1024) return `${(bytes / 1024).toFixed(1)} KiB`;
+  return `${bytes} B`;
 }
 
 export default function ProcessRow({ process }: Props) {

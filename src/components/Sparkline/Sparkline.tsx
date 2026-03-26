@@ -7,8 +7,19 @@ interface Props {
   color?: string;
 }
 
-export default function Sparkline({ data, width = 120, height = 32, color = "var(--accent)" }: Props) {
-  if (data.length < 2) return <div className={styles.root} style={{ width, height }} />;
+export default function Sparkline({ data, width = 120, height = 40, color = "var(--accent)" }: Props) {
+  if (data.length < 2) {
+    return (
+      <svg
+        className={styles.root}
+        width={width}
+        height={height}
+        viewBox={`0 0 ${width} ${height}`}
+        preserveAspectRatio="none"
+        aria-label="sparkline"
+      />
+    );
+  }
 
   const max = Math.max(...data, 1);
   const pts = data.map((v, i) => {

@@ -14,7 +14,7 @@ interface Props {
 
 function fmt(bytes: number): string {
   if (bytes >= 1_073_741_824) return `${(bytes / 1_073_741_824).toFixed(1)} GiB`;
-  if (bytes >= 1_048_576) return `${(bytes / 1_048_576).toFixed(0)} MiB`;
+  if (bytes >= 1_048_576) return `${(bytes / 1_048_576).toFixed(1)} MiB`;
   return `${(bytes / 1024).toFixed(0)} KiB`;
 }
 
@@ -50,16 +50,18 @@ export default function MemoryPanel({ memory: memoryProp, history: historyProp }
       <MetricBar
         label="RAM"
         value={ramPct}
-        detail={`${fmt(memory.used_bytes)} / ${fmt(memory.total_bytes)}`}
+        detail={fmt(memory.used_bytes)}
       />
-      <Sparkline data={displayHistory} width={200} height={28} color="var(--green)" />
-      {memory.swap_total_bytes > 0 && (
+      <Sparkline data={displayHistory} width={200} height={40} color="var(--green)" />
+      {memory.swap_total_bytes > 0 ? (
         <MetricBar
           label="Swap"
           value={swapPct}
-          detail={`${fmt(memory.swap_used_bytes)} / ${fmt(memory.swap_total_bytes)}`}
+          detail={fmt(memory.swap_used_bytes)}
           color="yellow"
         />
+      ) : (
+        <div className={styles.swapNone}>Swap: not configured</div>
       )}
     </div>
   );

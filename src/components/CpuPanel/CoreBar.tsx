@@ -15,7 +15,7 @@ export default function CoreBar({ index, usage }: Props) {
   const pct = Math.min(100, Math.max(0, usage));
   return (
     <div className={styles.coreBar}>
-      <div className={styles.coreLabel}>C{index}</div>
+      <div className={styles.coreLabel}>Core {index}</div>
       <div className={styles.coreTrack}>
         <div
           className={styles.coreFill}

@@ -15,8 +15,8 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
-import CpuPanel from '../../components/CpuPanel/CpuPanel'
-import type { CpuMetrics } from '../../types/metrics'
+import CpuPanel from '../components/CpuPanel/CpuPanel'
+import type { CpuMetrics } from '../types/metrics'
 
 function makeCpuMetrics(overrides: Partial<CpuMetrics> = {}): CpuMetrics {
   return {
