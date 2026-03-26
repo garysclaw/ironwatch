@@ -52,66 +52,35 @@ jobs:
   publish:
     name: Build and publish
     needs: test
-    runs-on: ubuntu-latest
     permissions:
       contents: write
-
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+          - os: windows-latest
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: "22"
-
-      - name: Install system dependencies
+      - run: npm install
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Install Linux system dependencies
+        if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt-get update
-          sudo apt-get install -y \
-            build-essential pkg-config \
-            libwebkit2gtk-4.1-dev libssl-dev \
-            libgtk-3-dev librsvg2-dev \
-            libxdo-dev libayatana-appindicator3-dev \
-            file
-
-      - name: Setup Rust
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Cache Rust dependencies
-        uses: Swatinem/rust-cache@v2
+          sudo apt-get install -y build-essential pkg-config libwebkit2gtk-4.1-dev libssl-dev libayatana-appindicator3-dev librsvg2-dev
+      - uses: Swatinem/rust-cache@v2
         with:
           workspaces: src-tauri
-
-      - name: Install JS dependencies
-        run: npm install
-
-      - name: Build and release
-        uses: tauri-apps/tauri-action@v0
+      - uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tagName: ${{ github.ref_name }}
           releaseName: "Ironwatch ${{ github.ref_name }}"
-          releaseBody: |
-            ## Ironwatch ${{ github.ref_name }}
-
-            Real-time Linux system performance dashboard.
-
-            ### Install
-
-            **Debian/Ubuntu** — download the `.deb` and run:
-            ```bash
-            sudo dpkg -i ironwatch_*.deb
-            ironwatch
-            ```
-
-            **AppImage** (any Linux) — download the `.AppImage` and run:
-            ```bash
-            chmod +x ironwatch_*.AppImage
-            ./ironwatch_*.AppImage
-            ```
-
-            ### What's in this release
-            See [SPEC.md](https://github.com/garysclaw/ironwatch/blob/main/SPEC.md) for full feature details.
           releaseDraft: false
           prerelease: false
