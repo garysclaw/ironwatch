@@ -6,7 +6,7 @@ export interface CpuMetrics {
 export interface MemoryMetrics {
   total_bytes: number;
   used_bytes: number;
-  available_bytes: number;
+  available_bytes?: number;
   swap_total_bytes: number;
   swap_used_bytes: number;
 }

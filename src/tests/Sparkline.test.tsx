@@ -15,7 +15,7 @@
 import React from 'react'
 import { render } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
-import Sparkline from '../../components/sparkline/Sparkline'
+import Sparkline from '../components/Sparkline/Sparkline'
 
 describe('Sparkline', () => {
   it('renders an SVG element', () => {

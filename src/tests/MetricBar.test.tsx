@@ -12,7 +12,7 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
-import MetricBar from '../../components/MetricBar/MetricBar'
+import MetricBar from '../components/MetricBar/MetricBar'
 
 describe('MetricBar', () => {
   it('renders without crashing', () => {

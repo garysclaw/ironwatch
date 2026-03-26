@@ -12,7 +12,7 @@
 
 import { renderHook, act } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
-import { useHistory } from '../../hooks/useHistory'
+import { useHistory } from '../hooks/useHistory'
 
 describe('useHistory', () => {
   it('initialises with an empty array', () => {

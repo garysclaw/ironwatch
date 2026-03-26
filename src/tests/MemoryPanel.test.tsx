@@ -13,8 +13,8 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
-import MemoryPanel from '../../components/MemoryPanel/MemoryPanel'
-import type { MemoryMetrics } from '../../types/metrics'
+import MemoryPanel from '../components/MemoryPanel/MemoryPanel'
+import type { MemoryMetrics } from '../types/metrics'
 
 const GiB = 1_073_741_824
 

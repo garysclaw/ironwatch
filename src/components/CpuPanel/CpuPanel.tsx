@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { useMetrics } from "../../contexts/MetricsContext";
-import MetricBar from "../MetricBar/MetricBar";
 import Sparkline from "../Sparkline/Sparkline";
 import CoreGrid from "./CoreGrid";
 import styles from "./CpuPanel.module.css";
@@ -41,7 +40,22 @@ export default function CpuPanel({ cpu: cpuProp, history: historyProp }: Props) 
         <span className={styles.freq}>{freqLabel}</span>
       </div>
       <div className={styles.main}>
-        <MetricBar label="Overall" value={cpu.overall_usage} />
+        <div className={styles.overall}>
+          <div className={styles.overallRow}>
+            <span className={styles.overallLabel}>Overall</span>
+            <span className={styles.overallPct}>{cpu.overall_usage.toFixed(1)}%</span>
+          </div>
+          <div className={styles.overallTrack}>
+            <div
+              className={styles.overallFill}
+              style={{ width: `${Math.min(100, cpu.overall_usage)}%` }}
+              role="progressbar"
+              aria-valuenow={cpu.overall_usage}
+              aria-valuemin={0}
+              aria-valuemax={100}
+            />
+          </div>
+        </div>
         <Sparkline data={displayHistory} width={200} height={36} />
       </div>
       <CoreGrid cores={cpu.per_core_usage} />

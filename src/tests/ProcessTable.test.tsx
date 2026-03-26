@@ -17,8 +17,8 @@
 import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
-import ProcessTable from '../../components/ProcessTable/ProcessTable'
-import type { ProcessEntry } from '../../types/metrics'
+import ProcessTable from '../components/ProcessTable/ProcessTable'
+import type { ProcessEntry } from '../types/metrics'
 
 const MiB = 1_048_576
 

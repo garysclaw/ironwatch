@@ -26,3 +26,9 @@
   font-size: 11px;
   color: var(--muted);
 }
+
+.swapNone {
+  font-size: 11px;
+  color: var(--muted);
+  font-style: italic;
+}

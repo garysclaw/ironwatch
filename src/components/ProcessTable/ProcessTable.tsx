@@ -22,7 +22,7 @@ export default function ProcessTable({ processes: processesProp }: Props) {
       setSortAsc((v) => !v);
     } else {
       setSortKey(key);
-      setSortAsc(false);
+      setSortAsc(true);
     }
   }
 
@@ -59,7 +59,7 @@ export default function ProcessTable({ processes: processesProp }: Props) {
             <tr>
               <SortHeader k="pid" label="PID" />
               <SortHeader k="name" label="Name" />
-              <th className={styles.th}>CPU %</th>
+              <SortHeader k="cpu_usage" label="CPU %" />
               <SortHeader k="memory_bytes" label="Memory" />
               <th className={styles.th}>Status</th>
             </tr>
