@@ -1,0 +1,91 @@
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--panel-radius);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.diskRow {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.diskTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.diskName {
+  font-size: 12px;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.diskSize {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.track {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+.diskStats {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.stat {
+  display: flex;
+  gap: 5px;
+}
+
+.statLabel {
+  color: var(--muted);
+}
+
+.io {
+  font-variant-numeric: tabular-nums;
+}
+
+.empty {
+  font-size: 12px;
+  color: var(--muted);
+}

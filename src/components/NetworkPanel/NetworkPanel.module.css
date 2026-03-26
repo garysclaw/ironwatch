@@ -1,0 +1,61 @@
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--panel-radius);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.netRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.iface {
+  font-size: 12px;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.rates {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.rx {
+  color: var(--green);
+}
+
+.tx {
+  color: var(--accent);
+}
+
+.empty {
+  font-size: 12px;
+  color: var(--muted);
+}
