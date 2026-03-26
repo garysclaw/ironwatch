@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 use sysinfo::{
-    CpuRefreshKind, Disks, Networks, ProcessRefreshKind, RefreshKind, System,
+    CpuRefreshKind, Disks, MemoryRefreshKind, Networks, ProcessesToUpdate, RefreshKind, System,
 };
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -64,10 +64,9 @@ impl MetricsCollector {
         let mut system = System::new_with_specifics(
             RefreshKind::new()
                 .with_cpu(CpuRefreshKind::everything())
-                .with_memory()
-                .with_processes(ProcessRefreshKind::everything()),
+                .with_memory(MemoryRefreshKind::everything()),
         );
-        // Initial refresh to populate data
+        // Initial full refresh to populate processes and other data
         system.refresh_all();
         let disks = Disks::new_with_refreshed_list();
         let networks = Networks::new_with_refreshed_list();
@@ -77,9 +76,9 @@ impl MetricsCollector {
     pub fn refresh(&mut self) {
         self.system.refresh_cpu_usage();
         self.system.refresh_memory();
-        self.system.refresh_processes(ProcessRefreshKind::everything());
-        self.disks.refresh(true);
-        self.networks.refresh(true);
+        self.system.refresh_processes(ProcessesToUpdate::All);
+        self.disks.refresh();
+        self.networks.refresh();
     }
 
     pub fn get_system_info(&self) -> crate::SystemInfo {
@@ -88,7 +87,9 @@ impl MetricsCollector {
         let os_version = System::os_version().unwrap_or_else(|| "unknown".to_string());
         let kernel_version = System::kernel_version().unwrap_or_else(|| "unknown".to_string());
         let cpus = self.system.cpus();
-        let cpu_brand = cpus.first().map(|c| c.brand().to_string()).unwrap_or_else(|| "unknown".to_string());
+        let cpu_brand = cpus.first()
+            .map(|c| c.brand().to_string())
+            .unwrap_or_else(|| "unknown".to_string());
         let cpu_count = cpus.len();
         crate::SystemInfo {
             hostname,
@@ -110,11 +111,7 @@ impl MetricsCollector {
         let per_core_usage: Vec<f32> = cpus.iter().map(|c| c.cpu_usage()).collect();
         let frequency_mhz = cpus.first().map(|c| c.frequency()).filter(|&f| f > 0);
 
-        let cpu = CpuMetrics {
-            overall_usage,
-            per_core_usage,
-            frequency_mhz,
-        };
+        let cpu = CpuMetrics { overall_usage, per_core_usage, frequency_mhz };
 
         let memory = MemoryMetrics {
             total_bytes: self.system.total_memory(),
@@ -124,14 +121,12 @@ impl MetricsCollector {
             swap_used_bytes: self.system.used_swap(),
         };
 
-        let disks: Vec<DiskMetrics> = self.disks.iter().map(|d| {
-            DiskMetrics {
-                name: d.name().to_string_lossy().to_string(),
-                read_bytes_per_sec: 0, // sysinfo doesn't give per-second rates directly; placeholder
-                write_bytes_per_sec: 0,
-                total_bytes: d.total_space(),
-                used_bytes: d.total_space() - d.available_space(),
-            }
+        let disks: Vec<DiskMetrics> = self.disks.iter().map(|d| DiskMetrics {
+            name: d.name().to_string_lossy().to_string(),
+            read_bytes_per_sec: 0,
+            write_bytes_per_sec: 0,
+            total_bytes: d.total_space(),
+            used_bytes: d.total_space() - d.available_space(),
         }).collect();
 
         let networks: Vec<NetworkMetrics> = self.networks.iter()
@@ -162,9 +157,10 @@ impl MetricsCollector {
                 status: format!("{:?}", proc.status()),
             })
             .collect();
-        processes.sort_by(|a, b| b.cpu_usage.partial_cmp(&a.cpu_usage).unwrap_or(std::cmp::Ordering::Equal));
+        processes.sort_by(|a, b| {
+            b.cpu_usage.partial_cmp(&a.cpu_usage).unwrap_or(std::cmp::Ordering::Equal)
+        });
         processes.truncate(20);
         processes
     }
 }
-
