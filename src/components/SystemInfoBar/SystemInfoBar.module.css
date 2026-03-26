@@ -1,0 +1,35 @@
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+  margin-right: 4px;
+}
+
+.item {
+  color: var(--muted);
+}
+
+.sep {
+  color: var(--border);
+}
+
+.spacer {
+  flex: 1;
+}
+
+.uptime {
+  color: var(--muted);
+  font-size: 11px;
+}

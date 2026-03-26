@@ -1,0 +1,52 @@
+:root {
+  --bg: #0d0f14;
+  --surface: #13151c;
+  --surface2: #1a1d26;
+  --border: #1f222e;
+  --text: #e2e6f3;
+  --muted: #5a6070;
+  --accent: #5c7cfa;
+  --accent-dim: #1e2545;
+  --green: #40c97a;
+  --yellow: #f5c542;
+  --red: #e05252;
+  --panel-radius: 10px;
+  --gap: 16px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+#root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
+}
