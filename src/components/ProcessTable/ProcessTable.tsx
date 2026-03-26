@@ -2,12 +2,18 @@ import { useState } from "react";
 import { useProcesses } from "../../contexts/ProcessesContext";
 import ProcessRow from "./ProcessRow";
 import styles from "./ProcessTable.module.css";
-import type { ProcessInfo } from "../../types/metrics";
+import type { ProcessEntry } from "../../types/metrics";
 
-type SortKey = keyof Pick<ProcessInfo, "name" | "cpu_usage" | "memory_bytes" | "pid">;
+type SortKey = keyof Pick<ProcessEntry, "name" | "cpu_usage" | "memory_bytes" | "pid">;
 
-export default function ProcessTable() {
-  const { processes } = useProcesses();
+interface Props {
+  processes?: ProcessEntry[];
+}
+
+export default function ProcessTable({ processes: processesProp }: Props) {
+  const { processes: contextProcesses } = useProcesses();
+  const processes = processesProp ?? contextProcesses;
+
   const [sortKey, setSortKey] = useState<SortKey>("cpu_usage");
   const [sortAsc, setSortAsc] = useState(false);
 
@@ -53,7 +59,7 @@ export default function ProcessTable() {
             <tr>
               <SortHeader k="pid" label="PID" />
               <SortHeader k="name" label="Name" />
-              <SortHeader k="cpu_usage" label="CPU %" />
+              <th className={styles.th}>CPU %</th>
               <SortHeader k="memory_bytes" label="Memory" />
               <th className={styles.th}>Status</th>
             </tr>

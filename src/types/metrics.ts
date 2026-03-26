@@ -1,7 +1,7 @@
 export interface CpuMetrics {
   overall_usage: number;       // 0-100
   per_core_usage: number[];    // 0-100 each
-  frequency_mhz: number;
+  frequency_mhz: number | null; // null if not available on this hardware
 }
 export interface MemoryMetrics {
   total_bytes: number;
@@ -29,6 +29,7 @@ export interface SystemMetrics {
   networks: NetworkMetrics[];
   timestamp: number;
 }
+/** ProcessInfo is the runtime name; ProcessEntry is the alias used in tests/props */
 export interface ProcessInfo {
   pid: number;
   name: string;
@@ -36,6 +37,8 @@ export interface ProcessInfo {
   memory_bytes: number;
   status: string;
 }
+export type ProcessEntry = ProcessInfo;
+
 export interface SystemInfo {
   hostname: string;
   os_name: string;
